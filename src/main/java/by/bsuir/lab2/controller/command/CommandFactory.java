@@ -27,7 +27,7 @@ public class CommandFactory {
     }
 
     public Command getCommand(HttpServletRequest request) {
-        String commandName = request.getPathInfo();
+        String commandName = request.getServletPath();
         Command command = commands.get(commandName);
         if (null == command) {
             return commands.get(GO_TO_ERROR_404_COMMAND);
