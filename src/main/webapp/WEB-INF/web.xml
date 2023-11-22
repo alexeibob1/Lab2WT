@@ -4,7 +4,31 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
+    <welcome-file-list>
+        <welcome-file>
+            jsp/home.jsp
+        </welcome-file>
+    </welcome-file-list>
 
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>by.bsuir.lab2.controller.Controller</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/pharmacy/*</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>UrlFilter</filter-name>
+        <filter-class>by.bsuir.lab2.controller.filter.UrlFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UrlFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <error-page>
         <error-code>404</error-code>
@@ -16,6 +40,6 @@
     </error-page>
 
     <session-config>
-        <session-timeout>1000</session-timeout>
+        <session-timeout>10</session-timeout>
     </session-config>
 </web-app>

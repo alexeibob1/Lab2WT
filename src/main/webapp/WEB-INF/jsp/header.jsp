@@ -18,6 +18,8 @@
 
     <c:choose>
         <c:when test="${not empty sessionScope.login}">
+
+<%--            Here place links for specific roles--%>
             <a href="<c:url value='logout'/>">${logout}</a>
         </c:when>
         <c:otherwise>
@@ -28,4 +30,5 @@
 
     <a href="<c:url value='change-locale?locale=ru'/>">${russian}</a>
     <a href="<c:url value='change-locale?locale=en'/>">${english}</a>
+    <br>
 </header>

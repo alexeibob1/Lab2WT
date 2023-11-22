@@ -5,6 +5,8 @@ public class CommandName {
 
     public static final String GO_TO_REGISTRATION_PAGE_COMMAND = "/register-form";
 
+    public static final String REGISTER_COMMAND = "/register";
+
     public static final String DEFAULT_COMMAND = "/";
 
     public static final String GO_TO_HOME_COMMAND = "/home";
