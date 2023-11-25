@@ -20,7 +20,7 @@
 <body>
 <c:choose>
     <c:when test="${not empty sessionScope.login}">
-        <c:redirect url="/pharmacy/home"/>
+        <c:redirect url="/home"/>
     </c:when>
     <c:otherwise>
         <jsp:include page="header.jsp" />

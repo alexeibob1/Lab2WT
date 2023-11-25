@@ -6,7 +6,7 @@
 
     <groupId>by.bsuir.lab2</groupId>
     <artifactId>Lab2</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Lab2</name>
     <packaging>war</packaging>
 
@@ -14,14 +14,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-        <junit.version>5.9.1</junit.version>
+        <junit.version>5.9.2</junit.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>5.0.0</version>
+            <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -66,8 +66,6 @@
             <artifactId>commons-validator</artifactId>
             <version>1.7</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -81,8 +79,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>14</source>
-                    <target>14</target>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+                <version>3.10.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <server>Tomcat10</server>
+                    <url>http://localhost:8080/manager/text</url>
+                    <path>/pharmacy</path>
                 </configuration>
             </plugin>
         </plugins>
