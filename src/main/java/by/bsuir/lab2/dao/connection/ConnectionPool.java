@@ -28,7 +28,8 @@ public class ConnectionPool {
 
     public void init(String propertiesFileName) throws ConnectionPoolException {
         Properties dbProperties = new Properties();
-        try (FileInputStream dbPropertiesFile = new FileInputStream(propertiesFileName + ".properties")) {
+        //try (FileInputStream dbPropertiesFile = new FileInputStream("" + propertiesFileName + ".properties")) {
+        try (FileInputStream dbPropertiesFile = new FileInputStream("D:\\Lab2WT\\src\\main\\resources\\db.properties")) {
             dbProperties.load(dbPropertiesFile);
             driver = dbProperties.getProperty(DatabaseParameter.DB_DRIVER);
             connectionURL = dbProperties.getProperty(DatabaseParameter.DB_CONNECTION_URL);

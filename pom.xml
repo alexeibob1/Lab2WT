@@ -74,6 +74,7 @@
     </dependencies>
 
     <build>
+        <finalName>pharmacy</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -97,6 +98,9 @@
                     <server>Tomcat10</server>
                     <url>http://localhost:8080/manager/text</url>
                     <path>/pharmacy</path>
+                    <username>alexei_bobrik</username>
+                    <password>chem</password>
+                    <update>true</update>
                 </configuration>
             </plugin>
         </plugins>

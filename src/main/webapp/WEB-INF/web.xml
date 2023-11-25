@@ -4,6 +4,10 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
+    <listener>
+        <listener-class>by.bsuir.lab2.controller.ContextListener</listener-class>
+    </listener>
+    
     <welcome-file-list>
         <welcome-file>
             jsp/home.jsp

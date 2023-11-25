@@ -2,6 +2,7 @@ package by.bsuir.lab2.controller.command;
 
 import by.bsuir.lab2.controller.command.impl.ChangeLocaleCommand;
 import by.bsuir.lab2.controller.command.impl.GoToCommand;
+import by.bsuir.lab2.controller.command.impl.RegisterCommand;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +25,7 @@ public class CommandFactory {
         commands.put(GO_TO_ERROR_503_COMMAND, new GoToCommand("error503.jsp"));
         commands.put(GO_TO_ERROR_404_COMMAND, new GoToCommand("error404.jsp"));
         commands.put(CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
+        commands.put(REGISTER_COMMAND, new RegisterCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {
