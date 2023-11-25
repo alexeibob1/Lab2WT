@@ -54,26 +54,28 @@ public class PooledConnection implements Connection {
         connection.rollback();
     }
 
+    //remove connection from pool
     @Override
     public void close() throws SQLException {
-        connection.close();
-    }
-    
-    public void prepareClose() throws SQLException {
         if (connection.isClosed()) {
             throw new SQLException("Attempt of closing of the closed DB connection.");
         }
-        
+
         if (!connection.isReadOnly()) {
             connection.setReadOnly(false);
         }
-        
+
         connection.setAutoCommit(true);
 
         BlockingQueue<Connection> connections = ConnectionPool.getInstance().getConnections();
         if (!connections.offer(this)) {
             throw new SQLException("Error during returning connection back to the connection pool.");
         }
+    }
+    
+    //really close connection
+    public void totalClose() throws SQLException {
+        connection.close();
     } 
 
     @Override

@@ -105,7 +105,7 @@ public class ConnectionPool {
                 if (!connection.getAutoCommit()) {
                     connection.commit();
                 }
-                connection.close();
+                ((PooledConnection)connection).totalClose();
             } catch (SQLException | InterruptedException e) {
                 throw new ConnectionPoolException("Error during closing of the connection pool.", e);
             }
