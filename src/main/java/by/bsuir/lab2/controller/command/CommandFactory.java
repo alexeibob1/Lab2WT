@@ -27,6 +27,7 @@ public class CommandFactory {
         commands.put(CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
         commands.put(REGISTER_COMMAND, new RegisterCommand());
         commands.put(LOGIN_COMMAND, new LoginCommand());
+        commands.put(LOGOUT_COMMAND, new LogoutCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

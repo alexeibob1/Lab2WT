@@ -14,6 +14,7 @@
 <html>
 <head>
     <title>${title}</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
 <c:choose>
