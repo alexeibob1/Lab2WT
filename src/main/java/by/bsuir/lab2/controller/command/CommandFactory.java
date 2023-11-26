@@ -8,9 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static by.bsuir.lab2.controller.constant.CommandName.*;
+import static by.bsuir.lab2.controller.constant.ViewPath.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class CommandFactory {
     //private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
@@ -18,12 +20,12 @@ public class CommandFactory {
     private static final CommandFactory instance = new CommandFactory();
 
     private CommandFactory() {
-        commands.put(GO_TO_LOGIN_PAGE_COMMAND, new GoToCommand("login.jsp"));
-        commands.put(GO_TO_REGISTRATION_PAGE_COMMAND, new GoToCommand("registration.jsp"));
-        commands.put(DEFAULT_COMMAND, new GoToCommand("home.jsp"));
-        commands.put(GO_TO_HOME_COMMAND, new GoToCommand("home.jsp"));
-        commands.put(GO_TO_ERROR_503_COMMAND, new GoToCommand("error503.jsp"));
-        commands.put(GO_TO_ERROR_404_COMMAND, new GoToCommand("error404.jsp"));
+        commands.put(GO_TO_LOGIN_PAGE_COMMAND, new GoToCommand(REDIRECT_LOGIN_FORM));
+        commands.put(GO_TO_REGISTRATION_PAGE_COMMAND, new GoToCommand(REDIRECT_REGISTRATION_FORM));
+        commands.put(DEFAULT_COMMAND, new GoToCommand(REDIRECT_HOME));
+        commands.put(GO_TO_HOME_COMMAND, new GoToCommand(REDIRECT_HOME));
+        commands.put(GO_TO_ERROR_503_COMMAND, new GoToCommand(REDIRECT_503));
+        commands.put(GO_TO_ERROR_404_COMMAND, new GoToCommand(REDIRECT_404));
         commands.put(CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
         commands.put(REGISTER_COMMAND, new RegisterCommand());
     }

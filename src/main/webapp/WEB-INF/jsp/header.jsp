@@ -17,7 +17,7 @@
     <a href="<c:url value='home'/>">${home}</a>
 
     <c:choose>
-        <c:when test="${not empty sessionScope.login}">
+        <c:when test="${not empty sessionScope.username}">
 
 <%--            Here place links for specific roles--%>
             <a href="<c:url value='logout'/>">${logout}</a>

@@ -34,8 +34,7 @@ public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
             
             rs = stmt.getGeneratedKeys();
             rs.next();
-            int userID = rs.getInt(1);
-            return userID;
+            return rs.getInt(1);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException("Exception during creating new record in `client` table in database.");
         } finally {

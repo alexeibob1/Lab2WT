@@ -29,8 +29,7 @@ public class UserServiceImpl implements UserService {
             }
             String passwordHash = SHA256.getSHA256Hash(user.getPassword());
             user.setPassword(passwordHash);
-            int userID = userDAO.addUser(user);
-            return userID;
+            return userDAO.addUser(user);
         } catch (DAOException e) {
             throw new ServiceException("Error during registration of a new user.");
         }

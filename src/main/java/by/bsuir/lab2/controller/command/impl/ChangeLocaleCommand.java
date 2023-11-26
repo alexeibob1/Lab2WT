@@ -2,6 +2,7 @@ package by.bsuir.lab2.controller.command.impl;
 
 import by.bsuir.lab2.controller.command.Command;
 import by.bsuir.lab2.controller.constant.SessionAttribute;
+import by.bsuir.lab2.controller.util.UrlUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +18,6 @@ public class ChangeLocaleCommand implements Command {
         String locale = request.getParameter(LOCALE_PARAM);
         HttpSession session = request.getSession();
         session.setAttribute(SessionAttribute.LOCALE, locale);
-        String refererPage = request.getHeader("referer");
-        response.sendRedirect(refererPage);
+        response.sendRedirect(UrlUtil.getRefererPage(request));
     }
 }

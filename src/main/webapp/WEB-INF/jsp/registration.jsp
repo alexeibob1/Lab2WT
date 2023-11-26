@@ -9,12 +9,14 @@
     <fmt:message key="password" var="password"/>
     <fmt:message key="email" var="email"/>
     <fmt:message key="confirmPassword" var="confirmPassword"/>
+    <fmt:message key="registration.success" var="successfulRegistration"/>
+    <fmt:message key="registration.error" var="failedRegistration"/>
 </fmt:bundle>
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
-    <script src="${pageContext.request.contextPath}/static/js/login_validation.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/validation/registration_validation.js"></script>
     <title>${title}</title>
 </head>
 <body>
@@ -39,7 +41,19 @@
             <input type="password" name="confirmPassword" id="confirmPassword" required minlength="7" maxlength="25">
             <br>
             <div id="validationMessage"></div>
+            
             <input type="submit" id="submit" value="${title}">
+            
+            <c:choose>
+                <c:when test="${sessionScope.reg_message eq 1}">
+                    <div id="reg-message" class="reg-message reg-success">${successfulRegistration}</div>
+                    <c:remove var="reg_message" scope="session"/>
+                </c:when>
+                <c:when test="${sessionScope.reg_message eq 2}">
+                    <div id="reg-message" class="reg-message reg-error">${failedRegistration}</div>
+                    <c:remove var="reg_message" scope="session"/>
+                </c:when>
+            </c:choose>
         </form>
     </c:otherwise>
 </c:choose>
