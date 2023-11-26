@@ -34,4 +34,18 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error during registration of a new user.");
         }
     }
+
+    @Override
+    public User login(String usernameOrEmail, String password) throws ServiceException, ValidationException {
+        if (!Validator.isLoginDataValid(usernameOrEmail, password)) {
+            throw new ValidationException("Invalid data for processing user login.");
+        }
+        
+        try {
+            String passwordHash = SHA256.getSHA256Hash(password);
+            return userDAO.getUser(usernameOrEmail, passwordHash);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception during processing user login.", e);
+        }
+    }
 }

@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
-    <Properties>
-        <Property name="log-path">$${env:CATALINA_BASE}/logs/jdbc-servlets</Property>
-        <Property name="archive">${log-path}/archive</Property>
-    </Properties>
+
+<Configuration status="ERROR">
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        <RollingFile name="File" fileName="log/log.txt"
+                     filePattern="log/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH-mm}-%i.txt">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy interval="10" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
     </Appenders>
-
     <Loggers>
-        <Root level="trace">
-            <AppenderRef ref="console" />
+        <Root>
+            <AppenderRef ref="Console" level="debug"/>
+        </Root>
+        <Root>
+            <AppenderRef ref="Console" level="info"/>
+        </Root>
+        <Root>
+            <AppenderRef ref="Console" level="warn"/>
+        </Root>
+        <Root>
+            <AppenderRef ref="Console" level="error"/>
+            <AppenderRef ref="File" level="error"/>
+        </Root>
+        <Root>
+            <AppenderRef ref="Console" level="trace"/>
+            <AppenderRef ref="File" level="trace"/>
         </Root>
     </Loggers>
 </Configuration>

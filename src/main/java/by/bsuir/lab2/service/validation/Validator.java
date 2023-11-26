@@ -20,4 +20,14 @@ public class Validator {
         }
         return true;
     }
+    
+    public static boolean isLoginDataValid(String usernameOrEmail, String password) {
+        if (GenericValidator.isBlankOrNull(usernameOrEmail)) {
+            return false;
+        }
+        if (GenericValidator.isBlankOrNull(password)) {
+            return false;
+        }
+        return true;
+    }
 }

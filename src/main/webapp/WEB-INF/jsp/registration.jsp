@@ -21,7 +21,7 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${not empty sessionScope.login}">
+    <c:when test="${not empty sessionScope.username}">
         <c:redirect url="/home"/>
     </c:when>
     <c:otherwise>

@@ -1,11 +1,8 @@
 package by.bsuir.lab2.controller.command.impl;
 
-import by.bsuir.lab2.bean.Role;
 import by.bsuir.lab2.bean.User;
 import by.bsuir.lab2.controller.command.Command;
 import by.bsuir.lab2.controller.constant.CommandName;
-import by.bsuir.lab2.controller.constant.SessionAttribute;
-import by.bsuir.lab2.controller.constant.ViewPath;
 import by.bsuir.lab2.controller.util.UrlUtil;
 import by.bsuir.lab2.service.ServiceFactory;
 import by.bsuir.lab2.service.UserService;
@@ -17,11 +14,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.net.URI;
 
-import static by.bsuir.lab2.controller.constant.SessionAttribute.REGISTRATION_MESSAGE_PARAM;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+import static by.bsuir.lab2.controller.constant.SessionAttribute.REGISTRATION_MESSAGE;
 
 public class RegisterCommand implements Command {
+    public static final Logger LOGGER = LogManager.getLogger(RegisterCommand.class);
     private static final String EMAIL_PARAM = "email";
     private static final String LOGIN_PARAM = "username";
     private static final String PASSWORD_PARAM = "password";
@@ -37,22 +38,19 @@ public class RegisterCommand implements Command {
         try {
             UserService userService = ServiceFactory.getInstance().getUserService();
             int userID = userService.register(user);
-            //session.setAttribute(SessionAttribute.ID_USER, userID);
-            //session.setAttribute(SessionAttribute.USERNAME, user.getUsername());
-            //session.setAttribute(SessionAttribute.ROLE, Role.CLIENT);
             
             //Create code for migrating basket
             
-            
-            session.setAttribute(REGISTRATION_MESSAGE_PARAM, SUCCESSFUL_REGISTRATION);
+            session.setAttribute(REGISTRATION_MESSAGE, SUCCESSFUL_REGISTRATION);
             response.sendRedirect(UrlUtil.getRefererPage(request));
         } catch (ValidationException e) {
-            //Invalid registration data//Logger
-            session.setAttribute(REGISTRATION_MESSAGE_PARAM, FAILED_REGISTRATION);
+            LOGGER.warn("Invalid user data for registration, validation failed!", e);
+            session.setAttribute(REGISTRATION_MESSAGE, FAILED_REGISTRATION);
             response.sendRedirect(UrlUtil.getRefererPage(request));
         } catch (ServiceException e) {
-            //Error during registration (503)//Logger
+            LOGGER.error("Unexpected error happened during registration. Registration is cancelled!", e);
             viewPath += request.getContextPath() + CommandName.GO_TO_ERROR_503_COMMAND;
+            response.sendRedirect(viewPath);
         }
     }
 

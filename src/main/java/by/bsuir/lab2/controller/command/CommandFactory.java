@@ -2,20 +2,18 @@ package by.bsuir.lab2.controller.command;
 
 import by.bsuir.lab2.controller.command.impl.ChangeLocaleCommand;
 import by.bsuir.lab2.controller.command.impl.GoToCommand;
+import by.bsuir.lab2.controller.command.impl.LoginCommand;
 import by.bsuir.lab2.controller.command.impl.RegisterCommand;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import static by.bsuir.lab2.controller.constant.CommandName.*;
-import static by.bsuir.lab2.controller.constant.ViewPath.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static by.bsuir.lab2.controller.constant.CommandName.*;
+import static by.bsuir.lab2.controller.constant.ViewPath.*;
+
 
 public class CommandFactory {
-    //private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
     private static final Map<String, Command> commands = new HashMap<>();
     private static final CommandFactory instance = new CommandFactory();
 
@@ -28,6 +26,7 @@ public class CommandFactory {
         commands.put(GO_TO_ERROR_404_COMMAND, new GoToCommand(REDIRECT_404));
         commands.put(CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
         commands.put(REGISTER_COMMAND, new RegisterCommand());
+        commands.put(LOGIN_COMMAND, new LoginCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

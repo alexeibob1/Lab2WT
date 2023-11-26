@@ -4,9 +4,11 @@ import by.bsuir.lab2.dao.connection.ConnectionPool;
 import by.bsuir.lab2.dao.connection.ConnectionPoolException;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ContextListener implements ServletContextListener {
-    //Logger
+    public static final Logger LOGGER = LogManager.getLogger(ContextListener.class);
 
     private static final String DB_PROPERTIES_FILE = "db";
 
@@ -15,7 +17,7 @@ public class ContextListener implements ServletContextListener {
         try {
             ConnectionPool.getInstance().init(DB_PROPERTIES_FILE);
         } catch (ConnectionPoolException e) {
-            //Logger
+            LOGGER.fatal("Exception during initialization of connection pool!", e);
             throw new RuntimeException(e);
         }
     }
@@ -25,7 +27,7 @@ public class ContextListener implements ServletContextListener {
         try {
             ConnectionPool.getInstance().destroy();
         } catch (ConnectionPoolException e) {
-            //Logger
+            LOGGER.error("Exception during destroying of connection pool", e);
         }
     }
 }

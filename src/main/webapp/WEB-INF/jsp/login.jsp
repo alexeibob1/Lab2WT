@@ -7,6 +7,8 @@
     <fmt:message key="header.login" var="title"/>
     <fmt:message key="username" var="username"/>
     <fmt:message key="password" var="password"/>
+    <fmt:message key="email" var="email"/>
+    <fmt:message key="login.error" var="failedLogin" />
 </fmt:bundle>
 <!DOCTYPE html>
 <html>
@@ -15,20 +17,26 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${not empty sessionScope.login}">
-        <c:redirect url="/pharmacy/home"/>
+    <c:when test="${not empty sessionScope.username}">
+        <c:redirect url="/home"/>
     </c:when>
     <c:otherwise>
         <jsp:include page="header.jsp" />
         <form action="<c:url value='login'/>"method="post">
-            <label for="username">${username}</label>
-            <input type="text" name="username" id="username">
+            <label for="username">${username}/${email}</label>
+            <input type="text" name="usernameOrEmail" id="username" required maxlength="20">
             <br>
             <label for="password">${password}</label>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" required minlength="7">
             <br>
             <input type="submit" value="${title}">
         </form>
+        <c:choose>
+            <c:when test="${not empty sessionScope.login_message}">
+                <div id="login-message" class="login-message login-error">${failedLogin}</div>
+                <c:remove var="login_message" scope="session"/>
+            </c:when>
+        </c:choose>
     </c:otherwise>
 </c:choose>
 

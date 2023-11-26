@@ -1,14 +1,17 @@
 package by.bsuir.lab2.controller.util;
 
+import by.bsuir.lab2.controller.command.Command;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UrlUtil {
-    //Logger
+    public static final Logger LOGGER = LogManager.getLogger(Command.class);
 
     private static final String REFERER_HEADER = "referer";
     
@@ -22,16 +25,14 @@ public class UrlUtil {
 
     public static URI addParameterToUri(String uri, String paramName, String paramValue) {
         try {
-            URI uriWithParam = new URIBuilder(uri).setParameter(paramName, paramValue).build();
-            return uriWithParam;
+            return new URIBuilder(uri).setParameter(paramName, paramValue).build();
         } catch (URISyntaxException e) {
-            //Logger
+            LOGGER.error("Exception during parsing URI string", e);
             throw new RuntimeException(e);
         }
     }
 
     public static URI addParameterToRefererPage(HttpServletRequest request, String paramName, String paramValue) {
-        URI uriWithParam = addParameterToUri(getRefererPage(request), paramName, paramValue);
-        return uriWithParam;
+        return addParameterToUri(getRefererPage(request), paramName, paramValue);
     }
 }

@@ -3,7 +3,7 @@
     font-weight: bold;
 }
 
-.reg-message {
+.reg-message, .login-message {
     font-weight: bold;
 }
 
@@ -11,6 +11,6 @@
     color: green;
 }
 
-.reg-error {
+.reg-error, .login-error {
     color: red;
 }
