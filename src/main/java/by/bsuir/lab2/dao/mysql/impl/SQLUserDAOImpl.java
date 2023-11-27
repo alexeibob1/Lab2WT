@@ -7,10 +7,13 @@ import by.bsuir.lab2.dao.connection.ConnectionPool;
 import by.bsuir.lab2.dao.connection.ConnectionPoolException;
 import by.bsuir.lab2.dao.exception.DAOException;
 import by.bsuir.lab2.dao.mysql.AbstractDAO;
+import org.apache.commons.collections.ListUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
     public static final Logger LOGGER = LogManager.getLogger(SQLUserDAOImpl.class);
@@ -18,9 +21,17 @@ public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
     public static final String GET_USER = "SELECT `client`.`id`, `username`, `role_id` " +
             "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id` " +
             "WHERE `password`=? AND (`email`=? OR `username`=?)";
+    
+    public static final String GET_USER_BY_ID = "SELECT `client`.`id`, `client`.`role_id`, `client`.`name`, `client`.`surname`, " +
+            "`client`.`patronymic`, `client`.`birth_date`, `client`.`username`, `client`.`email`, `client`.`password` " +
+            "FROM `client` WHERE `client`.`id`=?";
     public static final String GET_USER_NAME = "SELECT `name` FROM `client` WHERE `id`=?";
     private static final String IS_EMAIL_OR_LOGIN_EXIST = "SELECT EXISTS(SELECT 1 FROM `client` WHERE `username`=? OR `email`=?)";
     private static final String SET_USER_INFO = "";
+    
+    private static final String GET_ALL_USERS = "SELECT `client`.`id`, `client`.`role_id`, `client`.`name`, `client`.`surname`, " +
+            "`client`.`patronymic`, `client`.`birth_date`, `client`.`username`, `client`.`email`, `client`.`password` " +
+            "FROM `client`";
 
     public SQLUserDAOImpl() {
     }
@@ -118,6 +129,35 @@ public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
+    public User getUserByID(int userID) throws DAOException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            stmt = connection.prepareStatement(GET_USER_BY_ID);
+            stmt.setInt(1, userID);
+            rs = stmt.executeQuery();
+            rs.next();
+            if (rs.getRow() == 0) {
+                return null;
+            }
+            return formFullUser(rs);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException("Exception during getting user by id", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                ConnectionPool.getInstance().closeDBResources(rs, stmt);
+            } catch (SQLException e) {
+                LOGGER.warn("Exception during closing resources of the database.", e);
+            }
+        }
+    }
+
+    @Override
     public String getUsersName(int usedID) throws DAOException {
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -172,13 +212,68 @@ public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
             }
         }
     }
-    
+
+    @Override
+    public List<User> getUsers() throws DAOException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<User> users;
+        
+        try {
+            connection = getConnection();
+            stmt = connection.prepareStatement(GET_ALL_USERS);
+            rs = stmt.executeQuery();
+            users = formUsers(rs);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException("Exception during getting information about all users.", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                ConnectionPool.getInstance().closeDBResources(stmt);
+            } catch (SQLException e) {
+                LOGGER.warn("Exception during closing resources of the database.", e);
+            }
+        }
+        
+        if (users.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            return users;
+        }
+    }
+
     private User formUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt(1));
         user.setUsername(rs.getString(2));
         user.setRole(Role.values()[rs.getInt(3) - 1]);
         return user;
+    }
+    
+    private User formFullUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserId(rs.getInt(1));
+        user.setRole(Role.values()[rs.getInt(2) - 1]);
+        user.setName(rs.getString(3));
+        user.setSurname(rs.getString(4));
+        user.setPatronymic(rs.getString(5));
+        user.setBirthDate(rs.getDate(6));
+        user.setUsername(rs.getString(7));
+        user.setEmail(rs.getString(8));
+        user.setPassword(rs.getString(9));
+        return user;
+    }
+    
+    private List<User> formUsers(ResultSet rs) throws SQLException {
+        List<User> users = new ArrayList<>();
+        while (rs.next()) {
+            User user = formFullUser(rs);
+            users.add(user);
+        }
+        return users;
     }
     
 }

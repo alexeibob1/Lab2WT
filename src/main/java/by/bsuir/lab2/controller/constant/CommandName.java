@@ -22,4 +22,12 @@ public class CommandName {
     public static final String CHANGE_LOCALE_COMMAND = "/change-locale";
 
     public static final String UNKNOWN_COMMAND = "/error404";
+    
+    //ADMIN
+    
+    public static final String GO_TO_DRUGS_EDITOR_COMMAND = "/admin/drugs";
+    
+    public static final String GO_TO_USERS_EDITOR_COMMAND = "/admin/users";
+    
+    public static final String SHOW_USER_COMMAND = "/admin/users/show";
 }

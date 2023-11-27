@@ -26,7 +26,7 @@
     </c:when>
     <c:otherwise>
         <jsp:include page="header.jsp" />
-        <form action="register" method="post" id="reg-form">
+        <form action="<c:url value="register"/>" method="post" id="reg-form">
             <input type="hidden" id="locale" value="${sessionScope.locale}" />
             <label for="email">${email}</label>
             <input type="email" name="email" id="email" required>

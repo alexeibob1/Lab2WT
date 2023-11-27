@@ -9,6 +9,14 @@ public class ViewPath {
 
     public static final String REDIRECT_HOME = "home.jsp";
     
+    //ADMIN
+    
+    public static final String REDIRECT_DRUGS_EDITOR = "drugs-editor.jsp";
+    
+    public static final String FORWARD_USERS_EDITOR = "admin/users-editor.jsp";
+    
+    public static final String FORWARD_EDIT_USER_FORM = "admin/user-edit-form.jsp";
+    
     public static final String REDIRECT_503 = "error503.jsp";
 
     public static final String REDIRECT_404 = "error404.jsp";

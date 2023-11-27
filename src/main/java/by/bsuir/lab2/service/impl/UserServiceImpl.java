@@ -1,6 +1,8 @@
 package by.bsuir.lab2.service.impl;
 
+import by.bsuir.lab2.bean.Locale;
 import by.bsuir.lab2.bean.User;
+import by.bsuir.lab2.bean.UsersTO;
 import by.bsuir.lab2.dao.DAOFactory;
 import by.bsuir.lab2.dao.DAOManager;
 import by.bsuir.lab2.dao.StorageType;
@@ -11,6 +13,8 @@ import by.bsuir.lab2.service.exception.ServiceException;
 import by.bsuir.lab2.service.exception.ValidationException;
 import by.bsuir.lab2.service.util.SHA256;
 import by.bsuir.lab2.service.validation.Validator;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private static DAOManager daoManager = DAOFactory.getDAOManager(StorageType.MY_SQL);
@@ -47,5 +51,30 @@ public class UserServiceImpl implements UserService {
         } catch (DAOException e) {
             throw new ServiceException("Exception during processing user login.", e);
         }
+    }
+
+    @Override
+    public UsersTO getUsersForView() throws ServiceException {
+        UsersTO usersTO = null;
+        try {
+            List<User> users = userDAO.getUsers();
+            usersTO = new UsersTO();
+            usersTO.setUsers(users);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception during getting list of all users", e);
+        }
+        
+        return usersTO;
+    }
+
+    @Override
+    public User getUser(int userID) throws ServiceException {
+        User user = null;
+        try {
+            user = userDAO.getUserByID(userID);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception during getting user by ID", e);
+        }
+        return user;
     }
 }

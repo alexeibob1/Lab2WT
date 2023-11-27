@@ -41,4 +41,21 @@
     <session-config>
         <session-timeout>10</session-timeout>
     </session-config>
+
+    <filter>
+        <filter-name>AccessFilter</filter-name>
+        <filter-class>by.bsuir.lab2.controller.filter.AccessFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AccessFilter</filter-name>
+        <url-pattern>/pharmacist/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AccessFilter</filter-name>
+        <url-pattern>/doctor/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AccessFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
 </web-app>
