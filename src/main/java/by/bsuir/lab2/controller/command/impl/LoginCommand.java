@@ -42,7 +42,6 @@ public class LoginCommand implements Command {
                 
                 //Migrating basket from DB
                 
-                //viewPath += defineViewPath(user.getRole(), request);
                 viewPath += UrlUtil.getRefererPage(request);
                 response.sendRedirect(viewPath);
             } else {
@@ -60,11 +59,11 @@ public class LoginCommand implements Command {
         }
     }
 
-    private String defineViewPath(Role role, HttpServletRequest request) {
-        String viewPath = "";
-        switch (role) {
-            default:
-                return UrlUtil.getRefererPage(request);
-        }
-    }
+//    private String defineViewPath(Role role, HttpServletRequest request) {
+//        String viewPath = "";
+////        switch (role) {
+////            default:
+////                return UrlUtil.getRefererPage(request);
+////        }
+//    }
 }

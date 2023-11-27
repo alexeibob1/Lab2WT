@@ -30,4 +30,6 @@ public class CommandName {
     public static final String GO_TO_USERS_EDITOR_COMMAND = "/admin/users";
     
     public static final String SHOW_USER_COMMAND = "/admin/users/show";
+    
+    public static final String EDIT_USER_COMMAND = "/admin/users/change-user";
 }

@@ -21,16 +21,17 @@ public class AccessFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         HttpSession session = httpServletRequest.getSession();
-        
+
         Role role = (Role) session.getAttribute(SessionAttribute.ROLE);
         if (role == null) {
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + CommandName.GO_TO_HOME_COMMAND);
             return;
         }
-        
+
         switch (role) {
-            case ADMIN, DOCTOR  , PHARMACIST -> filterChain.doFilter(servletRequest, servletResponse); 
-            case CLIENT -> httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + CommandName.GO_TO_HOME_COMMAND);
+            case ADMIN, DOCTOR, PHARMACIST -> filterChain.doFilter(servletRequest, servletResponse);
+            case CLIENT ->
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + CommandName.GO_TO_HOME_COMMAND);
         }
     }
 

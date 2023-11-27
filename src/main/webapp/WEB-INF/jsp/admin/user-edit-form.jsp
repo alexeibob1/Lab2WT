@@ -12,7 +12,7 @@
     <fmt:message key="user.email" var="email"/>
     <fmt:message key="user.password" var="password"/>
     <fmt:message key="user.edit" var="edit"/>
-    
+    <fmt:message key="user.role" var="roleLabel"/>
 </fmt:bundle>
 <html>
 <head>
@@ -20,8 +20,22 @@
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
-<form action="<c:url value="admin/users/change-user"/> ">
+<form action="<c:url value="admin/users/change-user"/>" method="post">
     <input type="hidden" name="userID" value="${requestScope.user.userId}">
+    <c:set var="roles" value="${requestScope.roles}"/>
+    <label for="role">${roleLabel}</label>
+    <select name="role" id="role">
+        <c:forEach var="role" items="${roles}">
+            <c:choose>
+                <c:when test="${requestScope.user.role eq role}">
+                    <option value="${role}" selected>${role}</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="${role}">${role}</option>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </select>
     <div>
         <label for="name">${name}</label>
         <input type="text" id="name" name="name" value="${requestScope.user.name}">
