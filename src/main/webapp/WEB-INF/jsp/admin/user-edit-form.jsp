@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -13,6 +13,7 @@
     <fmt:message key="user.password" var="password"/>
     <fmt:message key="user.edit" var="edit"/>
     <fmt:message key="user.role" var="roleLabel"/>
+    <fmt:message key="user.edit_message" var="editMessage"/>
 </fmt:bundle>
 <html>
 <head>
@@ -20,18 +21,18 @@
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
-<form action="<c:url value="admin/users/change-user"/>" method="post">
+<form action="<c:url value="/admin/users/change-user"/>" method="post">
     <input type="hidden" name="userID" value="${requestScope.user.userId}">
     <c:set var="roles" value="${requestScope.roles}"/>
     <label for="role">${roleLabel}</label>
     <select name="role" id="role">
-        <c:forEach var="role" items="${roles}">
+        <c:forEach var="role" items="${roles.roles}">
             <c:choose>
-                <c:when test="${requestScope.user.role eq role}">
-                    <option value="${role}" selected>${role}</option>
+                <c:when test="${requestScope.user.role.name eq role.name}">
+                    <option value="${role.id}.${role.name}" selected>${role.name}</option>
                 </c:when>
                 <c:otherwise>
-                    <option value="${role}">${role}</option>
+                    <option value="${role.id}.${role.name}">${role.name}</option>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
@@ -54,17 +55,25 @@
     </div>
     <div>
         <label for="username">${username}</label>
-        <input type="text" id="username" name="username" value="${requestScope.user.username}" required>
+        <input type="text" id="username" name="username" value="${requestScope.user.username}" readonly>
     </div>
     <div>
         <label for="email">${email}</label>
-        <input type="email" id="email" name="email" value="${requestScope.user.email}" required>
+        <input type="email" id="email" name="email" value="${requestScope.user.email}" readonly>
     </div>
     <div>
         <label for="password">${password}</label>
         <input type="text" id="password" name="password" value="${requestScope.user.password}" readonly>
     </div>
     <input type="submit" value="${edit}">
+    <c:choose>
+        <c:when test="${not empty sessionScope.edit_message}">
+            <div class="edit-message">
+                    ${editMessage}
+            </div>
+            <c:remove var="edit_message" scope="session" />
+        </c:when>
+    </c:choose>
 </form>
 </body>
 </html>

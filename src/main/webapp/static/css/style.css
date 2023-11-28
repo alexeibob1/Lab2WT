@@ -3,11 +3,11 @@
     font-weight: bold;
 }
 
-.reg-message, .login-message {
+.reg-message, .login-message, .edit-message {
     font-weight: bold;
 }
 
-.reg-success {
+.reg-success, .edit-message {
     color: green;
 }
 

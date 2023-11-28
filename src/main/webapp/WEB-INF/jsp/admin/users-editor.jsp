@@ -42,7 +42,7 @@
             <c:forEach var="user" items="${users}">
                 <tr>
                     <th>${user.userId}</th>
-                    <th>${user.role}</th>
+                    <th>${user.role.name}</th>
                     <th>${user.name}</th>
                     <th>${user.surname}</th>
                     <th>${user.patronymic}</th>
@@ -51,10 +51,14 @@
                     <th>${user.email}</th>
                     <th>${user.password}</th>
                     <th>
-                        <form action="<c:url value="/admin/users/show"/>" method="get">
-                            <input type="hidden" value="${user.userId}" name="userID">
-                            <input type="submit" value="${editAction}">
-                        </form>
+                        <c:choose>
+                            <c:when test="${user.username ne sessionScope.username}">
+                                <form action="<c:url value="/admin/users/show"/>" method="get">
+                                    <input type="hidden" value="${user.userId}" name="userID">
+                                    <input type="submit" value="${editAction}">
+                                </form>
+                            </c:when>
+                        </c:choose>
                     </th>
                 </tr>
             </c:forEach>

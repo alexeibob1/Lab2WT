@@ -28,10 +28,9 @@ public class AccessFilter implements Filter {
             return;
         }
 
-        switch (role) {
-            case ADMIN, DOCTOR, PHARMACIST -> filterChain.doFilter(servletRequest, servletResponse);
-            case CLIENT ->
-                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + CommandName.GO_TO_HOME_COMMAND);
+        switch (role.getName()) {
+            case "ADMIN", "DOCTOR", "PHARMACIST" -> filterChain.doFilter(servletRequest, servletResponse);
+            default -> httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + CommandName.GO_TO_HOME_COMMAND);
         }
     }
 

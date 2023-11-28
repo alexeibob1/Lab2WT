@@ -1,4 +1,6 @@
-package by.bsuir.lab2.bean;
+package by.bsuir.lab2.bean.dto;
+
+import by.bsuir.lab2.bean.User;
 
 import java.util.List;
 
@@ -14,5 +16,8 @@ public class UsersTO {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public UsersTO() {
     }
 }

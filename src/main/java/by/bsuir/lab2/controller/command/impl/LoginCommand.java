@@ -1,6 +1,5 @@
 package by.bsuir.lab2.controller.command.impl;
 
-import by.bsuir.lab2.bean.Role;
 import by.bsuir.lab2.bean.User;
 import by.bsuir.lab2.controller.command.Command;
 import by.bsuir.lab2.controller.constant.CommandName;
@@ -18,9 +17,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.URI;
 
-import static by.bsuir.lab2.controller.constant.SessionAttribute.LOGIN_MESSAGE;
+import static by.bsuir.lab2.controller.constant.SessionAttribute.LOGIN_ERROR_MESSAGE;
 
 public class LoginCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
@@ -45,12 +43,12 @@ public class LoginCommand implements Command {
                 viewPath += UrlUtil.getRefererPage(request);
                 response.sendRedirect(viewPath);
             } else {
-                session.setAttribute(LOGIN_MESSAGE, true);
+                session.setAttribute(LOGIN_ERROR_MESSAGE, true);
                 response.sendRedirect(UrlUtil.getRefererPage(request));
             }
         } catch (ValidationException e) {
             LOGGER.warn("Invalid user credentials for login.", e);
-            session.setAttribute(LOGIN_MESSAGE, true);
+            session.setAttribute(LOGIN_ERROR_MESSAGE, true);
             response.sendRedirect(UrlUtil.getRefererPage(request));
         } catch (ServiceException e) {
             LOGGER.error("Unexpected error happened during login. Login is cancelled!", e);

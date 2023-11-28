@@ -1,8 +1,7 @@
 package by.bsuir.lab2.service.impl;
 
-import by.bsuir.lab2.bean.Locale;
 import by.bsuir.lab2.bean.User;
-import by.bsuir.lab2.bean.UsersTO;
+import by.bsuir.lab2.bean.dto.UsersTO;
 import by.bsuir.lab2.dao.DAOFactory;
 import by.bsuir.lab2.dao.DAOManager;
 import by.bsuir.lab2.dao.StorageType;
@@ -17,9 +16,9 @@ import by.bsuir.lab2.service.validation.Validator;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private static DAOManager daoManager = DAOFactory.getDAOManager(StorageType.MY_SQL);
+    private static final DAOManager daoManager = DAOFactory.getDAOManager(StorageType.MY_SQL);
 
-    private static UserDAO userDAO = daoManager.getUserDAO();
+    private static final UserDAO userDAO = daoManager.getUserDAO();
 
     @Override
     public int register(User user) throws ServiceException, ValidationException {
@@ -71,10 +70,21 @@ public class UserServiceImpl implements UserService {
     public User getUser(int userID) throws ServiceException {
         User user = null;
         try {
-            user = userDAO.getUserByID(userID);
+            user = userDAO.getUser(userID);
         } catch (DAOException e) {
             throw new ServiceException("Exception during getting user by ID", e);
         }
         return user;
+    }
+
+    @Override
+    public void updateUser(User user) throws ServiceException {
+        //VALIDATOR
+        
+        try {
+            userDAO.updateUser(user);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception during updating user info", e);
+        }
     }
 }

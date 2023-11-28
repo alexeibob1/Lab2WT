@@ -12,11 +12,13 @@ public interface UserDAO {
 
     User getUser(String usernameOrEmail, String password) throws DAOException;
     
-    User getUserByID(int userID) throws DAOException;
+    User getUser(int userID) throws DAOException;
     
     String getUsersName(int usedID) throws DAOException;
     
     void setUserInfo(User user) throws DAOException;
     
     List<User> getUsers() throws DAOException;
+    
+    void updateUser(User user) throws DAOException;
 }

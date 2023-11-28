@@ -1,7 +1,8 @@
 package by.bsuir.lab2.controller.command.impl.admin;
 
-import by.bsuir.lab2.bean.UsersTO;
+import by.bsuir.lab2.bean.dto.UsersTO;
 import by.bsuir.lab2.controller.command.Command;
+import by.bsuir.lab2.controller.constant.CommandName;
 import by.bsuir.lab2.controller.constant.ViewPath;
 import by.bsuir.lab2.service.ServiceFactory;
 import by.bsuir.lab2.service.UserService;
@@ -27,7 +28,8 @@ public class ShowUsersCommand implements Command {
             viewPath = ViewPath.COMMON_PAGES_PATH + ViewPath.FORWARD_USERS_EDITOR;
         } catch (ServiceException e) {
             //Logger
-            viewPath = ViewPath.COMMON_PAGES_PATH + ViewPath.REDIRECT_503;
+            viewPath += request.getContextPath() + CommandName.GO_TO_ERROR_503_COMMAND;
+            response.sendRedirect(viewPath);
         }
         
         request.getRequestDispatcher(viewPath).forward(request, response);

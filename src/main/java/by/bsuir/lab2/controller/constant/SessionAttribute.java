@@ -11,5 +11,7 @@ public class SessionAttribute {
 
     public static final String REGISTRATION_MESSAGE = "reg_message";
     
-    public static final String LOGIN_MESSAGE = "login_message";
+    public static final String LOGIN_ERROR_MESSAGE = "login_message";
+    
+    public static final String SUCCESSFUL_USER_EDIT_MESSAGE = "edit_message";
 }

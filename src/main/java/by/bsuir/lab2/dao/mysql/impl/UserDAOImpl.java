@@ -7,7 +7,6 @@ import by.bsuir.lab2.dao.connection.ConnectionPool;
 import by.bsuir.lab2.dao.connection.ConnectionPoolException;
 import by.bsuir.lab2.dao.exception.DAOException;
 import by.bsuir.lab2.dao.mysql.AbstractDAO;
-import org.apache.commons.collections.ListUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,28 +14,32 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
-    public static final Logger LOGGER = LogManager.getLogger(SQLUserDAOImpl.class);
+public class UserDAOImpl extends AbstractDAO implements UserDAO {
+    public static final Logger LOGGER = LogManager.getLogger(UserDAOImpl.class);
     private static final String ADD_USER = "INSERT INTO `client` (`username`, `email`, `password`) VALUES (?, ?, ?)";
-    public static final String GET_USER = "SELECT `client`.`id`, `username`, `role_id` " +
+    public static final String GET_USER = "SELECT `client`.`id`, `username`, `role_id`, `role`.`name` " +
             "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id` " +
             "WHERE `password`=? AND (`email`=? OR `username`=?)";
     
-    public static final String GET_USER_BY_ID = "SELECT `client`.`id`, `client`.`role_id`, `client`.`name`, `client`.`surname`, " +
+    public static final String GET_USER_BY_ID = "SELECT `client`.`id`, `client`.`role_id`, `role`.`name`, `client`.`name`, `client`.`surname`, " +
             "`client`.`patronymic`, `client`.`birth_date`, `client`.`username`, `client`.`email`, `client`.`password` " +
-            "FROM `client` WHERE `client`.`id`=?";
+            "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id` WHERE `client`.`id`=?";
     public static final String GET_USER_NAME = "SELECT `name` FROM `client` WHERE `id`=?";
     private static final String IS_EMAIL_OR_LOGIN_EXIST = "SELECT EXISTS(SELECT 1 FROM `client` WHERE `username`=? OR `email`=?)";
     private static final String SET_USER_INFO = "";
     
-    private static final String GET_ALL_USERS = "SELECT `client`.`id`, `client`.`role_id`, `client`.`name`, `client`.`surname`, " +
+    private static final String GET_ALL_USERS = "SELECT `client`.`id`, `client`.`role_id`, `role`.`name`, `client`.`name`, `client`.`surname`, " +
             "`client`.`patronymic`, `client`.`birth_date`, `client`.`username`, `client`.`email`, `client`.`password` " +
-            "FROM `client`";
+            "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id`";
+    
+    private static final String UPDATE_USER = "UPDATE `client` " +
+            "SET `role_id`=?, `name`=?, `surname`=?, `patronymic`=?, `birth_date`=? " +
+            "WHERE `client`.`id`=?";
 
-    public SQLUserDAOImpl() {
+    public UserDAOImpl() {
     }
 
-    public SQLUserDAOImpl(Connection connection) {
+    public UserDAOImpl(Connection connection) {
         super(connection);
     }
 
@@ -129,7 +132,7 @@ public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public User getUserByID(int userID) throws DAOException {
+    public User getUser(int userID) throws DAOException {
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -245,25 +248,72 @@ public class SQLUserDAOImpl extends AbstractDAO implements UserDAO {
         }
     }
 
+    @Override
+    public void updateUser(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            connection = getConnection();
+            connection.setAutoCommit(false);
+            stmt = connection.prepareStatement(UPDATE_USER);
+            stmt.setInt(1, user.getRole().getId());
+            stmt.setString(2, user.getName());
+            stmt.setString(3, user.getSurname());
+            stmt.setString(4, user.getPatronymic());
+            stmt.setDate(5, user.getBirthDate());
+            stmt.setInt(6, user.getUserId());
+            stmt.executeUpdate();
+            connection.commit();
+        } catch (SQLException | ConnectionPoolException e) {
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException e1) {
+                throw new DAOException("Exception during rollback transaction of updating user info.", e1);
+            }
+            throw new DAOException("Exception during updating users in table 'client' in database.", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                ConnectionPool.getInstance().closeDBResources(stmt);
+            } catch (SQLException e) {
+                LOGGER.warn("Exception during closing resources of the database.", e);
+            }
+        }
+    }
+
     private User formUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt(1));
         user.setUsername(rs.getString(2));
-        user.setRole(Role.values()[rs.getInt(3) - 1]);
+        
+        Role role = new Role();
+        role.setId(rs.getInt(3));
+        role.setName(rs.getString(4));
+        user.setRole(role);
+        
         return user;
     }
     
     private User formFullUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt(1));
-        user.setRole(Role.values()[rs.getInt(2) - 1]);
-        user.setName(rs.getString(3));
-        user.setSurname(rs.getString(4));
-        user.setPatronymic(rs.getString(5));
-        user.setBirthDate(rs.getDate(6));
-        user.setUsername(rs.getString(7));
-        user.setEmail(rs.getString(8));
-        user.setPassword(rs.getString(9));
+        
+        Role role = new Role();
+        role.setId(rs.getInt(2));
+        role.setName(rs.getString(3));
+        user.setRole(role);
+        
+        user.setName(rs.getString(4));
+        user.setSurname(rs.getString(5));
+        user.setPatronymic(rs.getString(6));
+        user.setBirthDate(rs.getDate(7));
+        user.setUsername(rs.getString(8));
+        user.setEmail(rs.getString(9));
+        user.setPassword(rs.getString(10));
         return user;
     }
     
