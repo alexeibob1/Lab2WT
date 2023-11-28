@@ -4,6 +4,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:bundle basename="language">
+    <fmt:message key="users_editor.title" var="title"/>
     <fmt:message key="user.name" var="name"/>
     <fmt:message key="user.surname" var="surname"/>
     <fmt:message key="user.patronymic" var="patronymic"/>
@@ -17,7 +18,8 @@
 </fmt:bundle>
 <html>
 <head>
-    <title>Редактируем пользователя</title>
+    <title>${title}</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
 <jsp:include page="../header.jsp"/>

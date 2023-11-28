@@ -31,8 +31,7 @@ public class EditUserCommand implements Command {
     private static final String USER_SURNAME_PARAM = "surname";
     private static final String USER_PATRONYMIC_PARAM = "patronymic";
     private static final String USER_BIRTHDATE_PARAM = "birthDate";
-
-
+    
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = formUser(request); 
