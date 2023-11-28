@@ -1,33 +1,36 @@
 package by.bsuir.lab2.bean;
 
 public class ProductLocal {
-    private Product product;
-    
+    private int productID;
+
     private Locale locale;
 
-    private Manufacturer manufacturer;
+    private String manufacturer;
+    
+    private String name;
+    
+    private String dosageUnit;
+    
+    private String drugForm;
 
-    private ProductName name;
-
-    private DosageUnit dosageUnit;
-
-    public ProductLocal(Product product, Locale locale, Manufacturer manufacturer, ProductName name, DosageUnit dosageUnit) {
-        this.product = product;
+    public ProductLocal(int productID, Locale locale, String manufacturer, String name, String dosageUnit, String drugForm) {
+        this.productID = productID;
         this.locale = locale;
         this.manufacturer = manufacturer;
         this.name = name;
         this.dosageUnit = dosageUnit;
+        this.drugForm = drugForm;
     }
 
     public ProductLocal() {
     }
 
-    public Product getProduct() {
-        return product;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public Locale getLocale() {
@@ -38,27 +41,35 @@ public class ProductLocal {
         this.locale = locale;
     }
 
-    public Manufacturer getManufacturer() {
+    public String getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(Manufacturer manufacturer) {
+    public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
-    public ProductName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(ProductName name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public DosageUnit getDosageUnit() {
+    public String getDosageUnit() {
         return dosageUnit;
     }
 
-    public void setDosageUnit(DosageUnit dosageUnit) {
+    public void setDosageUnit(String dosageUnit) {
         this.dosageUnit = dosageUnit;
+    }
+
+    public String getDrugForm() {
+        return drugForm;
+    }
+
+    public void setDrugForm(String drugForm) {
+        this.drugForm = drugForm;
     }
 }
