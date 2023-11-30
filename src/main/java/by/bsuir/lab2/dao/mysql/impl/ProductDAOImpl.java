@@ -38,7 +38,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
             connection = getConnection();
             stmt = connection.prepareStatement(ADD_PRODUCT, Statement.RETURN_GENERATED_KEYS);
             stmt.setDouble(1, productLocal.getDosage());
-            stmt.setBoolean(2, productLocal.isNeedPrescription());
+            stmt.setBoolean(2, productLocal.getIsNeedPrescription());
             stmt.setInt(3, productLocal.getAmount());
             stmt.setBigDecimal(4, productLocal.getPrice());
             stmt.executeUpdate();

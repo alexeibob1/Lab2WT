@@ -36,6 +36,7 @@ public class ShowUserCommand implements Command {
             request.setAttribute(ROLES_PARAM, roles);
             
             viewPath = ViewPath.COMMON_PAGES_PATH + ViewPath.FORWARD_EDIT_USER_FORM;
+            //viewPath = request.getContextPath() + CommandName.EDIT_USER_COMMAND;
         } catch (ServiceException e) {
             //Logger
             viewPath += request.getContextPath() + CommandName.GO_TO_ERROR_503_COMMAND;

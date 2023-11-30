@@ -4,6 +4,7 @@ import by.bsuir.lab2.controller.command.impl.ChangeLocaleCommand;
 import by.bsuir.lab2.controller.command.impl.GoToCommand;
 import by.bsuir.lab2.controller.command.impl.LoginCommand;
 import by.bsuir.lab2.controller.command.impl.RegisterCommand;
+import by.bsuir.lab2.controller.command.impl.admin.AddDrugCommand;
 import by.bsuir.lab2.controller.command.impl.admin.EditUserCommand;
 import by.bsuir.lab2.controller.command.impl.ShowDrugsCommand;
 import by.bsuir.lab2.controller.command.impl.admin.ShowUserCommand;
@@ -36,6 +37,7 @@ public class CommandFactory {
         commands.put(GO_TO_USERS_EDITOR_COMMAND, new ShowUsersCommand());
         commands.put(SHOW_USER_COMMAND, new ShowUserCommand());
         commands.put(EDIT_USER_COMMAND, new EditUserCommand());
+        commands.put(ADD_DRUG_COMMAND, new AddDrugCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

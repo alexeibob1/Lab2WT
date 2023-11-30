@@ -34,4 +34,6 @@ public class CommandName {
     public static final String SHOW_USER_COMMAND = "/admin/users/show";
     
     public static final String EDIT_USER_COMMAND = "/admin/users/change-user";
+    
+    public static final String ADD_DRUG_COMMAND = "/add-new-drug";
 }

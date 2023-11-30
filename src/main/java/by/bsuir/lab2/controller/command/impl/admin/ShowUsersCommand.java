@@ -24,6 +24,7 @@ public class ShowUsersCommand implements Command {
             UsersTO usersTO = userService.getUsersForView();
             request.setAttribute(USERS_VIEW_PARAM, usersTO);
             viewPath = ViewPath.COMMON_PAGES_PATH + ViewPath.REDIRECT_USERS_EDITOR;
+            //viewPath = request.getContextPath() + CommandName.GO_TO_USERS_EDITOR_COMMAND;
         } catch (ServiceException e) {
             //Logger
             viewPath += request.getContextPath() + CommandName.GO_TO_ERROR_503_COMMAND;
