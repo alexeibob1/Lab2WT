@@ -16,8 +16,6 @@ public interface UserDAO {
     
     String getUsersName(int usedID) throws DAOException;
     
-    void setUserInfo(User user) throws DAOException;
-    
     List<User> getUsers() throws DAOException;
     
     void updateUser(User user) throws DAOException;

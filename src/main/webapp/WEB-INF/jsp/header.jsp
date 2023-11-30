@@ -12,6 +12,7 @@
     <fmt:message key="russian" var="russian"/>
     <fmt:message key="admin.drugs" var="drugs"/>
     <fmt:message key="admin.users" var="users"/>
+    <fmt:message key="user.settings" var="settings"/>
 </fmt:bundle>
 
 <header>
@@ -25,9 +26,12 @@
                     <a href="<c:url value="/drugs"/>">${drugs}</a>
                     <a href="<c:url value="/admin/users"/>">${users}</a>
                 </c:when>
-                
+<%--                <c:when test="${sessionScope.role.name eq 'CLIENT'}">--%>
+<%--                    --%>
+<%--                </c:when>--%>
                 
             </c:choose>
+            
             <a href="<c:url value='/logout'/>">${logout}</a>
         </c:when>
         <c:otherwise>

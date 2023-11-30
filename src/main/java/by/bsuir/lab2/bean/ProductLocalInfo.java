@@ -1,6 +1,6 @@
 package by.bsuir.lab2.bean;
 
-public class ProductLocal {
+public class ProductLocalInfo {
     private int productID;
 
     private Locale locale;
@@ -13,7 +13,7 @@ public class ProductLocal {
     
     private String drugForm;
 
-    public ProductLocal(int productID, Locale locale, String manufacturer, String name, String dosageUnit, String drugForm) {
+    public ProductLocalInfo(int productID, Locale locale, String manufacturer, String name, String dosageUnit, String drugForm) {
         this.productID = productID;
         this.locale = locale;
         this.manufacturer = manufacturer;
@@ -22,7 +22,7 @@ public class ProductLocal {
         this.drugForm = drugForm;
     }
 
-    public ProductLocal() {
+    public ProductLocalInfo() {
     }
 
     public int getProductID() {

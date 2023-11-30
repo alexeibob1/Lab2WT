@@ -3,6 +3,7 @@ package by.bsuir.lab2.controller.command.impl;
 import by.bsuir.lab2.bean.User;
 import by.bsuir.lab2.controller.command.Command;
 import by.bsuir.lab2.controller.constant.CommandName;
+import by.bsuir.lab2.controller.util.DateUtil;
 import by.bsuir.lab2.controller.util.UrlUtil;
 import by.bsuir.lab2.service.ServiceFactory;
 import by.bsuir.lab2.service.UserService;
@@ -26,6 +27,10 @@ public class RegisterCommand implements Command {
     private static final String EMAIL_PARAM = "email";
     private static final String LOGIN_PARAM = "username";
     private static final String PASSWORD_PARAM = "password";
+    private static final String NAME_PARAM = "name";
+    private static final String SURNAME_PARAM = "surname";
+    private static final String PATRONYMIC_PARAM = "patronymic";
+    private static final String BIRTHDATE_PARAM = "birthDate";
 
     private static final int SUCCESSFUL_REGISTRATION = 1;
     private static final int FAILED_REGISTRATION = 2;
@@ -59,6 +64,10 @@ public class RegisterCommand implements Command {
         user.setEmail(request.getParameter(EMAIL_PARAM));
         user.setUsername(request.getParameter(LOGIN_PARAM));
         user.setPassword(request.getParameter(PASSWORD_PARAM));
+        user.setName(request.getParameter(NAME_PARAM));
+        user.setSurname(request.getParameter(SURNAME_PARAM));
+        user.setPatronymic(request.getParameter(PATRONYMIC_PARAM));
+        user.setBirthDate(DateUtil.getDateFromString(request.getParameter(BIRTHDATE_PARAM)));
         return user;
     }
 }

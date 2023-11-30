@@ -33,7 +33,7 @@
             <input type="submit" value="${title}">
         </form>
         <c:choose>
-            <c:when test="${not empty requestScope.login_message}">
+            <c:when test="${not empty sessionScope.login_message}">
                 <div id="login-message" class="login-message login-error">${failedLogin}</div>
                 <c:remove var="login_message" scope="session"/>
             </c:when>

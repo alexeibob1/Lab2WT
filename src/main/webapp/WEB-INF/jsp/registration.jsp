@@ -11,6 +11,10 @@
     <fmt:message key="confirmPassword" var="confirmPassword"/>
     <fmt:message key="registration.success" var="successfulRegistration"/>
     <fmt:message key="registration.error" var="failedRegistration"/>
+    <fmt:message key="user.name" var="name"/>
+    <fmt:message key="user.surname" var="surname"/>
+    <fmt:message key="user.patronymic" var="patronymic"/>
+    <fmt:message key="user.birth_date" var="birthDate"/>
 </fmt:bundle>
 <!DOCTYPE html>
 <html>
@@ -40,6 +44,23 @@
             <label for="confirmPassword">${confirmPassword}</label>
             <input type="password" name="confirmPassword" id="confirmPassword" required minlength="7" maxlength="25">
             <br>
+
+            <label for="name">${name}</label>
+            <input type="text" name="name" id="name" required minlength="2" maxlength="40">
+            <br>
+
+            <label for="surname">${surname}</label>
+            <input type="text" name="surname" id="surname" required minlength="2" maxlength="40">
+            <br>
+
+            <label for="patronymic">${patronymic}</label>
+            <input type="text" name="patronymic" id="patronymic" minlength="2" maxlength="40">
+            <br>
+
+            <label for="birthDate">${birthDate}</label>
+            <input type="date" name="birthDate" id="birthDate" required>
+            <br>
+            
             <div id="validationMessage"></div>
             
             <input type="submit" id="submit" value="${title}">

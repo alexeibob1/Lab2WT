@@ -16,7 +16,8 @@ import java.util.List;
 
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
     public static final Logger LOGGER = LogManager.getLogger(UserDAOImpl.class);
-    private static final String ADD_USER = "INSERT INTO `client` (`username`, `email`, `password`) VALUES (?, ?, ?)";
+    private static final String ADD_USER = "INSERT INTO `client` (`username`, `email`, `password`, `name`, `surname`, `patronymic`, `birth_date`) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_USER = "SELECT `client`.`id`, `username`, `role_id`, `role`.`name` " +
             "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id` " +
             "WHERE `password`=? AND (`email`=? OR `username`=?)";
@@ -54,6 +55,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getName());
+            stmt.setString(5, user.getSurname());
+            stmt.setString(6, user.getPatronymic());
+            stmt.setDate(7, user.getBirthDate());
             stmt.executeUpdate();
             
             rs = stmt.getGeneratedKeys();
@@ -181,35 +186,6 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
                     connection.close();
                 }
                 ConnectionPool.getInstance().closeDBResources(rs, stmt);
-            } catch (SQLException e) {
-                LOGGER.warn("Exception during closing resources of the database.", e);
-            }
-        }
-    }
-
-    @Override
-    public void setUserInfo(User user) throws DAOException {
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        try {
-            connection = getConnection();
-            stmt = connection.prepareStatement(SET_USER_INFO);
-//            stmt.setString(1, user.getName());
-//            stmt.setString(2, user.getMiddleName());
-//            stmt.setString(3, user.getSurname());
-//            stmt.setString(4, user.getAdress());
-//            stmt.setString(5, user.getPassport());
-//            stmt.setString(6, user.getTelephone());
-//            stmt.setInt(7, user.getIdUser());
-            stmt.executeUpdate();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DAOException("Exception during adding info about user to table 'client' in database.", e);
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-                ConnectionPool.getInstance().closeDBResources(stmt);
             } catch (SQLException e) {
                 LOGGER.warn("Exception during closing resources of the database.", e);
             }

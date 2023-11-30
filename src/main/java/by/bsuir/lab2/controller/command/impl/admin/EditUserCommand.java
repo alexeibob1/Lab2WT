@@ -6,6 +6,7 @@ import by.bsuir.lab2.controller.command.Command;
 import by.bsuir.lab2.controller.constant.CommandName;
 import by.bsuir.lab2.controller.constant.SessionAttribute;
 import by.bsuir.lab2.controller.constant.ViewPath;
+import by.bsuir.lab2.controller.util.DateUtil;
 import by.bsuir.lab2.controller.util.UrlUtil;
 import by.bsuir.lab2.service.ServiceFactory;
 import by.bsuir.lab2.service.UserService;
@@ -55,10 +56,10 @@ public class EditUserCommand implements Command {
             user.setUserId(Integer.parseInt(request.getParameter(USER_ID_PARAM)));
             Role role = formRole(request);
             user.setRole(role);
+            user.setBirthDate(DateUtil.getDateFromString(request.getParameter(USER_BIRTHDATE_PARAM)));
             user.setName(request.getParameter(USER_NAME_PARAM));
             user.setSurname(request.getParameter(USER_SURNAME_PARAM));
             user.setPatronymic(request.getParameter(USER_PATRONYMIC_PARAM));
-            user.setBirthDate(Date.valueOf(request.getParameter(USER_BIRTHDATE_PARAM)));
         } catch (Exception e) {
             //LALALA
         }
