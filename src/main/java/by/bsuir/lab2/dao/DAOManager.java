@@ -4,4 +4,6 @@ public interface DAOManager {
     UserDAO getUserDAO();
     
     RoleDAO getRoleDAO();
+    
+    ProductDAO getProductDAO();
 }
