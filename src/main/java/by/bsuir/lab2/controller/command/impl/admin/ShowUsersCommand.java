@@ -18,14 +18,12 @@ public class ShowUsersCommand implements Command {
     private static final String USERS_VIEW_PARAM = "usersView";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
         String viewPath = "";
-        
         try {
             UserService userService = ServiceFactory.getInstance().getUserService();
             UsersTO usersTO = userService.getUsersForView();
             request.setAttribute(USERS_VIEW_PARAM, usersTO);
-            viewPath = ViewPath.COMMON_PAGES_PATH + ViewPath.FORWARD_USERS_EDITOR;
+            viewPath = ViewPath.COMMON_PAGES_PATH + ViewPath.REDIRECT_USERS_EDITOR;
         } catch (ServiceException e) {
             //Logger
             viewPath += request.getContextPath() + CommandName.GO_TO_ERROR_503_COMMAND;

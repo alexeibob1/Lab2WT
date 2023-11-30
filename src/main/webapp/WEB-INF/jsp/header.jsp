@@ -23,7 +23,7 @@
 
             <c:choose>
                 <c:when test="${sessionScope.role.name eq 'ADMIN'}">
-                    <a href="<c:url value="/drugs"/>">${drugs}</a>
+                    <a href="<c:url value="/admin/drugs"/>">${drugs}</a>
                     <a href="<c:url value="/admin/users"/>">${users}</a>
                 </c:when>
 <%--                <c:when test="${sessionScope.role.name eq 'CLIENT'}">--%>

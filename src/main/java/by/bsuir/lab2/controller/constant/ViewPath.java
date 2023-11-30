@@ -11,9 +11,9 @@ public class ViewPath {
     
     //ADMIN
     
-    public static final String REDIRECT_DRUGS_EDITOR = "drugs-editor.jsp";
+    public static final String REDIRECT_DRUGS_EDITOR = "admin/drugs-editor.jsp";
     
-    public static final String FORWARD_USERS_EDITOR = "admin/users-editor.jsp";
+    public static final String REDIRECT_USERS_EDITOR = "admin/users-editor.jsp";
     
     public static final String FORWARD_EDIT_USER_FORM = "admin/user-edit-form.jsp";
     

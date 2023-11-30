@@ -21,18 +21,18 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     public static final String GET_USER = "SELECT `client`.`id`, `username`, `role_id`, `role`.`name` " +
             "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id` " +
             "WHERE `password`=? AND (`email`=? OR `username`=?)";
-    
+
     public static final String GET_USER_BY_ID = "SELECT `client`.`id`, `client`.`role_id`, `role`.`name`, `client`.`name`, `client`.`surname`, " +
             "`client`.`patronymic`, `client`.`birth_date`, `client`.`username`, `client`.`email`, `client`.`password` " +
             "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id` WHERE `client`.`id`=?";
     public static final String GET_USER_NAME = "SELECT `name` FROM `client` WHERE `id`=?";
     private static final String IS_EMAIL_OR_LOGIN_EXIST = "SELECT EXISTS(SELECT 1 FROM `client` WHERE `username`=? OR `email`=?)";
     private static final String SET_USER_INFO = "";
-    
+
     private static final String GET_ALL_USERS = "SELECT `client`.`id`, `client`.`role_id`, `role`.`name`, `client`.`name`, `client`.`surname`, " +
             "`client`.`patronymic`, `client`.`birth_date`, `client`.`username`, `client`.`email`, `client`.`password` " +
             "FROM `client` INNER JOIN `role` ON `client`.`role_id` = `role`.`id`";
-    
+
     private static final String UPDATE_USER = "UPDATE `client` " +
             "SET `role_id`=?, `name`=?, `surname`=?, `patronymic`=?, `birth_date`=? " +
             "WHERE `client`.`id`=?";
@@ -60,7 +60,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             stmt.setString(6, user.getPatronymic());
             stmt.setDate(7, user.getBirthDate());
             stmt.executeUpdate();
-            
+
             rs = stmt.getGeneratedKeys();
             rs.next();
             return rs.getInt(1);
@@ -198,7 +198,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<User> users;
-        
+
         try {
             connection = getConnection();
             stmt = connection.prepareStatement(GET_ALL_USERS);
@@ -216,12 +216,12 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
                 LOGGER.warn("Exception during closing resources of the database.", e);
             }
         }
-        
+
         if (users.isEmpty()) {
             return new ArrayList<>();
-        } else {
-            return users;
         }
+        
+        return users;
     }
 
     @Override
@@ -265,24 +265,24 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         User user = new User();
         user.setUserId(rs.getInt(1));
         user.setUsername(rs.getString(2));
-        
+
         Role role = new Role();
         role.setId(rs.getInt(3));
         role.setName(rs.getString(4));
         user.setRole(role);
-        
+
         return user;
     }
-    
+
     private User formFullUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt(1));
-        
+
         Role role = new Role();
         role.setId(rs.getInt(2));
         role.setName(rs.getString(3));
         user.setRole(role);
-        
+
         user.setName(rs.getString(4));
         user.setSurname(rs.getString(5));
         user.setPatronymic(rs.getString(6));
@@ -292,7 +292,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         user.setPassword(rs.getString(10));
         return user;
     }
-    
+
     private List<User> formUsers(ResultSet rs) throws SQLException {
         List<User> users = new ArrayList<>();
         while (rs.next()) {
@@ -301,5 +301,5 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         }
         return users;
     }
-    
+
 }

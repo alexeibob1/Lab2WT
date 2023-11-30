@@ -16,7 +16,7 @@ public class LocalizedProductTO {
 
     private BigDecimal price;
     
-    List<ProductLocalInfo> productLocalInfoList;
+    private List<ProductLocalInfo> productLocalInfoList;
 
     public LocalizedProductTO() {
     }
