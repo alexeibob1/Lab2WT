@@ -18,11 +18,13 @@
 <html>
 <head>
     <title>${title}</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+
 </head>
 <body>
     <jsp:include page="../header.jsp"/>
     <c:set var="users" value="${requestScope.usersView.users}"/>
-    <table style="border: black solid 1px">
+    <table>
         <thead>
             <tr>
                 <th>ID</th>
@@ -39,16 +41,16 @@
         <tbody>
             <c:forEach var="user" items="${users}">
                 <tr>
-                    <th>${user.userId}</th>
-                    <th>${user.role.name}</th>
-                    <th>${user.name}</th>
-                    <th>${user.surname}</th>
-                    <th>${user.patronymic}</th>
-                    <th>${user.birthDate}</th>
-                    <th>${user.username}</th>
-                    <th>${user.email}</th>
-                    <th>${user.password}</th>
-                    <th>
+                    <td>${user.userId}</td>
+                    <td>${user.role.name}</td>
+                    <td>${user.name}</td>
+                    <td>${user.surname}</td>
+                    <td>${user.patronymic}</td>
+                    <td>${user.birthDate}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.password}</td>
+                    <td>
                         <c:choose>
                             <c:when test="${user.username ne sessionScope.username}">
                                 <form action="<c:url value="/admin/users/show"/>" method="get">
@@ -57,7 +59,7 @@
                                 </form>
                             </c:when>
                         </c:choose>
-                    </th>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>

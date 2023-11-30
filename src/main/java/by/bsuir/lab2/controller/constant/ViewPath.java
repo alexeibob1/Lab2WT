@@ -8,7 +8,10 @@ public class ViewPath {
     public static final String REDIRECT_REGISTRATION_FORM = "registration.jsp";
 
     public static final String REDIRECT_HOME = "home.jsp";
-    
+
+    public static final String FORWARD_PRODUCTS = "drugs.jsp";
+
+
     //ADMIN
     
     public static final String REDIRECT_DRUGS_EDITOR = "admin/drugs-editor.jsp";

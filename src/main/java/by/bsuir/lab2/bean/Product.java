@@ -39,11 +39,11 @@ public class Product {
         this.dosage = dosage;
     }
 
-    public boolean isNeedPrescription() {
+    public boolean getIsNeedPrescription() {
         return isNeedPrescription;
     }
 
-    public void setNeedPrescription(boolean needPrescription) {
+    public void setIsNeedPrescription(boolean needPrescription) {
         isNeedPrescription = needPrescription;
     }
 

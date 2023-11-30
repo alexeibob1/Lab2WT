@@ -16,14 +16,13 @@
 </fmt:bundle>
 
 <header>
-    <a href="<c:url value='/home'/>">${home}</a>
-
+    <a href="<c:url value='/'/>">${home}</a>
+    <a href="<c:url value="/drugs"/>">${drugs}</a>
     <c:choose>
         <c:when test="${not empty sessionScope.username}">
 
             <c:choose>
                 <c:when test="${sessionScope.role.name eq 'ADMIN'}">
-                    <a href="<c:url value="/admin/drugs"/>">${drugs}</a>
                     <a href="<c:url value="/admin/users"/>">${users}</a>
                 </c:when>
 <%--                <c:when test="${sessionScope.role.name eq 'CLIENT'}">--%>

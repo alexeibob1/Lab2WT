@@ -3,7 +3,6 @@ package by.bsuir.lab2.dao.mysql.impl;
 import by.bsuir.lab2.bean.Locale;
 import by.bsuir.lab2.bean.Product;
 import by.bsuir.lab2.bean.ProductLocalInfo;
-import by.bsuir.lab2.bean.User;
 import by.bsuir.lab2.bean.dto.LocalizedProductTO;
 import by.bsuir.lab2.dao.ProductDAO;
 import by.bsuir.lab2.dao.connection.ConnectionPool;
@@ -171,7 +170,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
         Product product = new Product();
         product.setProductID(rs.getInt(1));
         product.setDosage(rs.getDouble(2));
-        product.setNeedPrescription(rs.getBoolean(3));
+        product.setIsNeedPrescription(rs.getBoolean(3));
         product.setAmount(rs.getInt(4));
         product.setPrice(rs.getBigDecimal(5));
         product.setManufacturer(rs.getString(6));
